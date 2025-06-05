@@ -1,6 +1,59 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
+import React, {
+    useState,
+    useEffect
+} from 'react';
+// import {
+//     AppBar,
+//     Toolbar,
+//     Typography,
+//     Container,
+//     Grid,
+//     Card,
+//     CardContent,
+//     TextField,
+//     Button
+// } from '@material-ui/core';
+// import {
+//     Add as AddIcon
+// } from '@material-ui/icons';
+
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Grid from '@mui/material/Grid';
+import { Typography } from '@mui/material';
+
+import axios from 'axios';
+
+const apiUrl = 'http://localhost:5000/author';
+interface Post{
+    _id: string;
+    title: string;
+    content?: string;
+    crearedAt: string;
+    authorId: string;
+
+}
 export default function Home() {
+  const [posts, setPosts] = useState<Post[]>([]);
+    const [newPost, setNewPost] = useState({
+        title: '',
+        content: 'Sample Content'
+    });
+
+    useEffect(() => {
+        axios.get(`${apiUrl}/posts`)
+            .then(response => {
+              console.log('Fetched posts:', response);
+              const result= response.json()
+                setPosts(response.articles);
+            })
+            .catch(error => {
+                console.error('Error fetching posts:', error);
+            });
+    }, []);
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -13,7 +66,25 @@ export default function Home() {
           </li>
         
         </ol>
-
+<div>
+  {posts.map(post => (
+                        <Grid key={post._id} >
+                            <Card className="card">
+                                <CardContent className="card-content">
+                                    <Typography variant="h5"
+                                        className="post-title">
+                                        {post.title}
+                                    </Typography>
+                                    <Typography variant="body2"
+                                        className="post-content">
+                                        {post.content}
+                                    </Typography>
+                                </CardContent>
+                                
+                            </Card>
+                        </Grid>
+                    ))}
+</div>
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <Link
             className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
