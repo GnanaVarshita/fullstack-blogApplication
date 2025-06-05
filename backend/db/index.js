@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://gnana:gnana@cluster0.betal21.mongodb.net/blog-app').then(()=>{
+mongoose.connect('yor url').then(()=>{
     console.log('Connection to MongoDB established successfully');
 }).catch((err)=>{
     console.error(`Error while connecting to MongoDB: ${err}`);
@@ -11,16 +11,16 @@ mongoose.connect('mongodb+srv://gnana:gnana@cluster0.betal21.mongodb.net/blog-ap
 
 
 const AuthorSchema = new mongoose.Schema({
-    // Schema definition here
+    
     email:String,
     password:String,
     
 });
 
 const ArticleSchema = new mongoose.Schema({
-    // Schema definition here
+  
     title:String,
-    description:String,
+    content:String,
     createdAt: {
         type: Date,
         default: Date.now

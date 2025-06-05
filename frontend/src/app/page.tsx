@@ -27,8 +27,8 @@ import { Typography } from '@mui/material';
 
 import axios from 'axios';
 
-const apiUrl = 'http://localhost:5000/author';
-interface Post{
+export const apiUrl = 'http://localhost:5000/author';
+export interface Post{
     _id: string;
     title: string;
     content?: string;
@@ -38,17 +38,17 @@ interface Post{
 }
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
-    const [newPost, setNewPost] = useState({
-        title: '',
-        content: 'Sample Content'
-    });
+    // const [newPost, setNewPost] = useState({
+    //     title: '',
+    //     content: 'Sample Content'
+    // });
 
     useEffect(() => {
         axios.get(`${apiUrl}/posts`)
             .then(response => {
               console.log('Fetched posts:', response);
-              const result= response.json()
-                setPosts(response.articles);
+              const result= response.data
+                setPosts(result.articles);
             })
             .catch(error => {
                 console.error('Error fetching posts:', error);
@@ -101,14 +101,13 @@ export default function Home() {
             />
             Sign Up
           </Link>
-          <a
+          <Link
             className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
+            href="/login"
             rel="noopener noreferrer"
           >
             Login 
-          </a>
+          </Link>
         </div>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">

@@ -6,7 +6,7 @@ const authorMiddleware = require("../middlewares/author");
 
 // User Routes
 router.post('/signup', (req, res) => {
-    // Implement user signup logic
+
     const email = req.body.email;
     const password = req.body.password;
     
@@ -55,7 +55,7 @@ router.post('/login', async (req, res) => {
        const email = req.body.email
        const password = req.body.password
 
-        // Find the user by email & password
+       
         const user = await Author.find({ email, password });
        // console.log(user);
 
@@ -63,10 +63,10 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ message: "Invalid credentials" });
         }
 
-        // Generate JWT token
+ 
         const token = jwt.sign({email}, "Gv_SERVER");
 
-        // Return token & user ID
+    
         res.status(200).json({
             token: token,
             id: user[0]._id,
@@ -91,7 +91,7 @@ router.get('/posts', (req, res) => {
 });
 
 router.post('/post', authorMiddleware, async(req, res) => {
-    // Implement course purchase logic
+   
     const article = new Article({
         title: req.body.title,
         content: req.body.content,
