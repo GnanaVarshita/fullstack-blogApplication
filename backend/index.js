@@ -5,12 +5,12 @@ const app = express();
 
 app.use(cors())
 //define admin if necessary 
-const userRouter = require("./routes/user");
+const authorRouter = require("./routes/author");
 
 
 app.use(bodyParser.json());
 
-app.use("/user", userRouter)
+app.use("/author", authorRouter)
 
 const PORT = 5000;
 app.listen(PORT, () => {

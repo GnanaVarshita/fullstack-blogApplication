@@ -10,30 +10,35 @@ mongoose.connect('mongodb+srv://gnana:gnana@cluster0.betal21.mongodb.net/blog-ap
 // Define schemas
 
 
-const UserSchema = new mongoose.Schema({
+const AuthorSchema = new mongoose.Schema({
     // Schema definition here
     email:String,
     password:String,
-    publishedArticles:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Course'
-    }]
+    
 });
 
 const ArticleSchema = new mongoose.Schema({
     // Schema definition here
     title:String,
     description:String,
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    authorId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
 
     
 });
 
 //const Admin = mongoose.model('Admin', AdminSchema);
-const User = mongoose.model('User', UserSchema);
-const Course = mongoose.model('Article', CourseSchema);
+const Author = mongoose.model('User', AuthorSchema);
+const Article = mongoose.model('Article', ArticleSchema);
 
 module.exports = {
 
-    User,
+    Author,
     Article
 }

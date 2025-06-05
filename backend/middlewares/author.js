@@ -1,12 +1,14 @@
 const jwt = require('jsonwebtoken')
 const secret = 'Gv_SERVER'
-function userMiddleware(req, res, next) {
+function authorMiddleware(req, res, next) {
     
 const token = req.headers.authorization 
+console.log(token)
 const key = token.split(" ")[1]
 //verify
 const decodedValue=jwt.verify(key,secret)
-if(decodedValue.username){
+if(decodedValue.email){
+    console.log("User is authorized")
     next()
 }else{
     res.status(401).json({
@@ -15,4 +17,4 @@ if(decodedValue.username){
 }
 }
 
-module.exports = userMiddleware;
+module.exports = authorMiddleware;
